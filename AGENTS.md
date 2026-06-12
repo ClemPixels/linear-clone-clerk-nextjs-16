@@ -37,29 +37,35 @@ This repo is built **foundation-first, then in parallel tracks**. Each track is 
 ## Track ownership map
 
 ### Track A — Board & Views (`track/board-views`)
+
 Kanban board (@dnd-kit, fractional `sortOrder`), list-view filtering, saved views (`views` table, JSON `filters` string), full-text search page (search indexes `search_title`/`search_description` exist on `issues`), extra keyboard shortcuts.
 **Owns:** `app/(app)/[orgSlug]/team/[teamId]/board/`, `app/(app)/[orgSlug]/search/`, `components/board/`, `components/views/`, `convex/views.ts`, `convex/search.ts`.
 **May add** a board/list toggle by adding a new route — do not rewrite the existing team page; link to your board page from your own components/commands.
 
 ### Track B — Projects & Cycles (`track/projects-cycles`)
+
 Project CRUD + progress (issue counts by status), cycles per team (auto-numbered, start/end dates, current cycle), assigning issues via the existing `issues.update` (projectId/cycleId args already exist). Enforce `assertCanCreateProject`.
 **Owns:** `app/(app)/[orgSlug]/projects/`, `app/(app)/[orgSlug]/cycles/`, `components/projects/`, `components/cycles/`, `convex/projects.ts`, `convex/cycles.ts`.
 
 ### Track C — Issue Detail Collaboration (`track/issue-collab`)
+
 Comments (+@mentions using `organizations.listMembers`), activity feed rendering (`activity` table is already written to), sub-issues (parentIssueId), issue relations, attachments (Convex file storage, `attachments` table), presence (Convex presence component — `components` export from `convex/_generated/api`).
 **Owns:** `components/issue-detail/` (EXCEPT `slots.tsx` registry + `issue-properties.tsx`), `convex/comments.ts`, `convex/activity.ts`, `convex/attachments.ts`, `convex/issueRelations.ts`, `convex/presenceFns.ts`. Register your panels in `components/issue-detail/slots.tsx` (one-line additions).
 
 ### Track D — AI Agent (`track/ai-agent`)
+
 Convex Agent component (`@convex-dev/agent`) with OpenAI (`@ai-sdk/openai`), org-scoped tools (create/update/search issues, cycle summary, project status, list members — reuse internal logic, enforce org scoping in EVERY tool), chat UI at `/ai`, triage assist (embeddings on issue create via scheduled internal action filling `issues.embedding`, vector index `by_embedding`, dimensions 1536), duplicate detection, standup/cycle reports, rate limiting (`@convex-dev/rate-limiter`: 50 msgs/user/day on Pro, unlimited Enterprise), gate everything with `hasAiAccess(ctx.org)` and `has({ feature: "ai_agent" })` in UI.
 **Owns:** `convex/agent/` (use `"use node"` only in action files needing it), `components/ai/`, `app/(app)/[orgSlug]/ai/`.
 **Env:** `OPENAI_API_KEY` must be set on the Convex deployment (`npx convex env set OPENAI_API_KEY ...` from main checkout — ask the human if missing).
 
 ### Track E — Billing & Gating (`track/billing`)
+
 Custom pricing page (REPLACES placeholder): three hand-designed shadcn plan cards + feature comparison + monthly/annual toggle, using **`<CheckoutButton>` and `<PlanDetailsButton>` from `@clerk/nextjs/experimental` with custom child buttons** (NOT `<PricingTable />`), wrapped in `<Show when="signed-in">` and guarded by an active org. Org billing settings page with `<SubscriptionDetailsButton for="organization">` + current-plan summary. Upgrade prompts where free-tier limits hit (listen for the error messages from `convex/lib/limits.ts`). Members management page (invite via Clerk's `<OrganizationProfile />` or custom UI).
 **Owns:** `app/(marketing)/pricing/`, `app/(app)/[orgSlug]/settings/`, `components/billing/`, `lib/plans.ts`.
 **Plan data:** slugs `free_org` / `pro` / `enterprise`; IDs: free `cplan_3F1zEN33U3ist3e1eWPiu7xwDUg`, pro `cplan_3F1zOlRdECmGJjGmWIwzRyjeK5O` ($20/mo base + $10/seat after the first seat, max 10 members, seat-based), enterprise `cplan_3F1zOpyzIlH2xrZiCaIc2DqFOOL` ($99/mo flat, unlimited members pending B2B add-on). Features: `ai_agent`, `unlimited_projects`, `unlimited_issues`, `unlimited_seats`, `unlimited_ai`, `priority_support`. Annual prices exist (pro $16/mo-equiv, enterprise $79/mo-equiv). Put IDs in `lib/plans.ts`, not inline.
 
 ### Track F — Landing Page (`track/landing`)
+
 Marketing landing page (REPLACES placeholder `app/(marketing)/page.tsx`): Linear-aesthetic hero, product feature sections (issues/cycles/AI agent), social proof, CTA, light/dark aware. Keep `app/(marketing)/layout.tsx` nav as-is.
 **Owns:** `app/(marketing)/` (except `pricing/`), `components/marketing/`.
 

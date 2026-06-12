@@ -16,10 +16,10 @@ todos:
     status: completed
   - id: foundation-conventions
     content: Write AGENTS.md (track file-ownership map + parallel-work rules) and design doc; commit foundation to main
-    status: in_progress
+    status: completed
   - id: track-briefs
     content: Create worktrees and launch parallel tracks A (board/views), B (projects/cycles), C (issue detail collab), D (AI agent), E (billing), F (landing)
-    status: pending
+    status: cancelled
 isProject: false
 ---
 
