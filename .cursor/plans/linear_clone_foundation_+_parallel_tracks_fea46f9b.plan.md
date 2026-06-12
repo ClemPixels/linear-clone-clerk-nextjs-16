@@ -10,10 +10,10 @@ todos:
     status: completed
   - id: foundation-convex
     content: "Convex: dev deployment, auth.config, complete schema.ts, convex.config.ts components, custom auth wrappers, webhook sync endpoint, plan-limit helpers, core teams/issues CRUD"
-    status: in_progress
+    status: completed
   - id: foundation-shell
     content: "App shell: marketing/app route groups, sidebar layout, org onboarding, theme toggle, shared primitives, command palette + shortcut registry, issue list/detail skeleton with slots"
-    status: pending
+    status: in_progress
   - id: foundation-conventions
     content: Write AGENTS.md (track file-ownership map + parallel-work rules) and design doc; commit foundation to main
     status: pending
