@@ -4,7 +4,6 @@ import { useQuery } from "convex/react";
 import { Loader2 } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { CurrentPlanCard } from "@/components/billing/current-plan-card";
-import { PlanLimitListener } from "@/components/billing/upgrade-prompt";
 import { UpgradeOptions } from "@/components/billing/upgrade-options";
 import { UsageCard } from "@/components/billing/usage-card";
 
@@ -42,7 +41,6 @@ export default function BillingSettingsPage() {
       <CurrentPlanCard org={org} />
       <UsageCard org={org} />
       <UpgradeOptions org={org} />
-      <PlanLimitListener />
     </>
   );
 }

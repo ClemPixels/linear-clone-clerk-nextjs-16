@@ -102,24 +102,34 @@ export function UpgradePromptDialog({
 }
 
 /**
+ * Toast ids already inspected for plan-limit errors. Module-level (not
+ * per-instance) so that when more than one listener is mounted — the global
+ * one in WorkspaceShell plus any slot-level mounts — exactly one instance
+ * claims a given limit-error toast and opens the dialog.
+ */
+const seenToastIds = new Set<string | number>();
+
+/**
  * Watches the global sonner toast stream for the free-plan limit error
  * messages thrown by convex/lib/limits.ts and surfaces the upgrade dialog.
- * Mount once per page; it renders nothing until a limit error appears.
- * Registered as an issue-detail slot and on the settings pages.
+ * Mounted once for the whole workspace in WorkspaceShell, so limit errors
+ * toasted from anywhere (command palette create-issue, board quick-create,
+ * project dialogs, settings) trigger the upgrade prompt. Additional mounts
+ * (e.g. the issue-detail slot) are harmless no-ops thanks to the shared
+ * seen-toast set. Renders nothing until a limit error appears.
  */
 export function PlanLimitListener() {
   const { toasts } = useSonner();
-  const seenToastIds = useRef<Set<string | number>>(new Set());
   const pendingKindRef = useRef<PlanLimitKind | null>(null);
   const [limit, setLimit] = useState<PlanLimitKind | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     for (const t of toasts) {
-      if (seenToastIds.current.has(t.id)) {
+      if (seenToastIds.has(t.id)) {
         continue;
       }
-      seenToastIds.current.add(t.id);
+      seenToastIds.add(t.id);
       const title = typeof t.title === "string" ? t.title : "";
       const description =
         typeof t.description === "string" ? t.description : "";

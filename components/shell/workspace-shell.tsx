@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import { api } from "@/convex/_generated/api";
+import { PlanLimitListener } from "@/components/billing/upgrade-prompt";
 import { CommandProvider } from "@/components/commands/command-provider";
 import { AppSidebar } from "./app-sidebar";
 
@@ -84,6 +85,8 @@ export function WorkspaceShell({
 
   return (
     <CommandProvider>
+      {/* Global upgrade prompt: catches free-plan limit errors toasted anywhere in the workspace. */}
+      <PlanLimitListener />
       <div className="flex h-dvh overflow-hidden">
         <AppSidebar />
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
