@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react";
+import { projectCycleCommands } from "@/components/projects/commands";
 
 /**
  * Command palette + keyboard shortcut registry.
@@ -59,4 +60,5 @@ export const appCommands: AppCommand[] = [
   ...builtinCommands,
   // ...boardCommands,
   ...boardViewCommands,
+  ...projectCycleCommands,
 ];

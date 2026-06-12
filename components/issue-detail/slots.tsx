@@ -1,5 +1,6 @@
 import { ComponentType } from "react";
 import { Doc } from "@/convex/_generated/dataModel";
+import { IssueProjectCyclePanel } from "@/components/projects/issue-project-cycle-panel";
 
 /**
  * Issue detail extension slots.
@@ -37,4 +38,5 @@ export const issueDetailSidebarSlots: ComponentType<IssueDetailSlotProps>[] = [
   LabelsPanel,
   RelationsPanel,
   AttachmentsPanel,
+  IssueProjectCyclePanel,
 ];

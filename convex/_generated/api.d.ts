@@ -11,6 +11,7 @@
 import type * as activity from "../activity.js";
 import type * as attachments from "../attachments.js";
 import type * as comments from "../comments.js";
+import type * as cycles from "../cycles.js";
 import type * as http from "../http.js";
 import type * as issueRelations from "../issueRelations.js";
 import type * as issues from "../issues.js";
@@ -21,6 +22,7 @@ import type * as lib_customFunctions from "../lib/customFunctions.js";
 import type * as lib_limits from "../lib/limits.js";
 import type * as organizations from "../organizations.js";
 import type * as presenceFns from "../presenceFns.js";
+import type * as projects from "../projects.js";
 import type * as search from "../search.js";
 import type * as teams from "../teams.js";
 import type * as users from "../users.js";
@@ -37,6 +39,7 @@ declare const fullApi: ApiFromModules<{
   activity: typeof activity;
   attachments: typeof attachments;
   comments: typeof comments;
+  cycles: typeof cycles;
   http: typeof http;
   issueRelations: typeof issueRelations;
   issues: typeof issues;
@@ -47,6 +50,7 @@ declare const fullApi: ApiFromModules<{
   "lib/limits": typeof lib_limits;
   organizations: typeof organizations;
   presenceFns: typeof presenceFns;
+  projects: typeof projects;
   search: typeof search;
   teams: typeof teams;
   users: typeof users;
